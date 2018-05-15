@@ -41,8 +41,8 @@ object Versions {
   val CodaHaleMetrics = "3.0.2"
   val ScalaCheck      = "1.12.5"
   val ScalaMock       = "3.2"
-  val ScalaTest       = "2.2.6"
-  val Scalactic       = "2.2.6"
+  val ScalaTest       = "3.0.3"
+  val Scalactic       = "3.0.3"
   val Slf4j           = "1.6.1"//1.7.7"
 
   // Spark version can be specified as:

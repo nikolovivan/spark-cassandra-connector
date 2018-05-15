@@ -284,7 +284,7 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
       .options(Map("keyspace" -> ks, "table" -> "test1", PushdownUsesConf.testKey -> "Don't Remove"))
       .load().filter("g=1 and h=1")
 
-    val qp = df.queryExecution.executedPlan
+    val qp = df.queryExecution.logical
     qp.constraints should not be empty
 
     val df2 = sparkSession
@@ -294,7 +294,7 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
       .load().filter("g=1 and h=1")
 
 
-    val qp2 = df2.queryExecution.executedPlan
+    val qp2 = df2.queryExecution.logical
     qp2.constraints shouldBe empty
   }
 }

@@ -40,7 +40,7 @@ object Versions {
   val Netty           = "4.0.33.Final"
   val CodaHaleMetrics = "3.0.2"
   val ScalaCheck      = "1.12.5"
-  val ScalaMock       = "3.2"
+  val ScalaMock       = "4.1.0"
   val ScalaTest       = "3.0.3"
   val Scalactic       = "3.0.3"
   val Slf4j           = "1.6.1"//1.7.7"

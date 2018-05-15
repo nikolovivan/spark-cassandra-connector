@@ -203,10 +203,6 @@ object Artifacts {
       .exclude("org.apache.spark", s"spark-bagel_$scalaBinary")
       .exclude("org.apache.spark", s"spark-mllib_$scalaBinary")
       .exclude("org.scala-lang", "scala-compiler")
-
-    def cassandraServerExclude(): ModuleID = module.logbackExclude()
-      .exclude("net.jpountz.lz4", "lz4")
-      .exclude("org.slf4j", "log4j-over-slf4j")  // ApacheV2
   }
 
   val cassandraDriver         = "com.datastax.cassandra"  % "cassandra-driver-core"  % CassandraDriver driverExclusions() // ApacheV2
@@ -231,7 +227,7 @@ object Artifacts {
   val sparkCatalyst       = "org.apache.spark"        %% "spark-catalyst"        % Spark sparkExclusions()        // ApacheV2
   val sparkHive           = "org.apache.spark"        %% "spark-hive"            % Spark sparkExclusions()        // ApacheV2
 
-  val cassandraServer     = "org.apache.cassandra"    % "cassandra-all"          % Testing.cassandraTestVersion cassandraServerExclude()
+  val cassandraServer     = "org.apache.cassandra"    % "cassandra-all"          % Testing.cassandraTestVersion      logbackExclude()  exclude(org = "org.slf4j", name = "log4j-over-slf4j")  // ApacheV2
 
   object Metrics {
     val metricsCore       = "com.codahale.metrics"    % "metrics-core"           % CodaHaleMetrics % "provided"
@@ -253,7 +249,7 @@ object Artifacts {
   object Test {
     val commonsIO         = "commons-io"              % "commons-io"                    % CommonsIO % "test,it"       // ApacheV2
     val scalaCheck        = "org.scalacheck"          %% "scalacheck"                   % ScalaCheck % "test,it"      // BSD
-    val scalaMock         = "org.scalamock"           %% "scalamock"  % ScalaMock % "test,it"       // BSD
+    val scalaMock         = "org.scalamock"           %% "scalamock"                    % ScalaMock % "test,it"       // BSD
     val scalaTest         = "org.scalatest"           %% "scalatest"                    % ScalaTest % "test,it"       // ApacheV2
     val scalactic         = "org.scalactic"           %% "scalactic"                    % Scalactic % "test,it"       // ApacheV2
     val sparkCoreT        = "org.apache.spark"        %% "spark-core"                   % Spark     % "test,it" classifier "tests"

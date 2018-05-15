@@ -331,7 +331,7 @@ object Dependencies {
   }
 
   val embedded = logging ++ spark ++ cassandra ++ Seq(
-    cassandraServer % "it,test",
+    cassandraServer % "it,test" exclude("net.jpountz.lz4", "lz4"),
     Embedded.jopt,
     Embedded.sparkRepl,
     Embedded.snappy,

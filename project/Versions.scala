@@ -35,13 +35,13 @@ object Versions {
   val JodaC           = "1.2"
   val JodaT           = "2.3"
   val JOpt            = "3.2"
-  val Lzf             = "0.8.4"
+  val Lzf             = "1.0.3"
   val Netty           = "4.0.33.Final"
   val CodaHaleMetrics = "3.0.2"
-  val ScalaCheck      = "1.12.5"
-  val ScalaMock       = "3.2"
-  val ScalaTest       = "2.2.6"
-  val Scalactic       = "2.2.6"
+  val ScalaCheck      = "1.14.0"
+  val ScalaMock       = "4.1.0"
+  val ScalaTest       = "3.0.3"
+  val Scalactic       = "3.0.3"
   val Slf4j           = "1.6.1"//1.7.7"
 
   // Spark version can be specified as:

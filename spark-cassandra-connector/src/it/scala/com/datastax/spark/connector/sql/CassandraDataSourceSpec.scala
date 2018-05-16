@@ -255,6 +255,7 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
     qp should include ("Filter (") // Should have a Spark Filter Step
   }
 
+  // fails. Not sure if affects correctness.
   it should "apply user custom predicates in the order they are specified" in {
     sc.setLocalProperty(
       CassandraSourceRelation.AdditionalCassandraPushDownRulesParam.name,
@@ -273,6 +274,7 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
     qp.toString should include ("EqualTo(a,1), EqualTo(b,2), EqualTo(c,1)")
   }
 
+  // fails
   it should "pass through local conf properties" in {
     sc.setLocalProperty(
       CassandraSourceRelation.AdditionalCassandraPushDownRulesParam.name,

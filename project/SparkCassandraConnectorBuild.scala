@@ -213,7 +213,6 @@ object Artifacts {
   val jodaC                   = "org.joda"                % "joda-convert"           % JodaC
   val jodaT                   = "joda-time"               % "joda-time"              % JodaT
   val lzf                     = "com.ning"                % "compress-lzf"           % Lzf            % "provided"
-  val lz4                     = "org.lz4"                 % "lz4-java"               % Lz4            % "provided"
   val netty                   = "io.netty"                % "netty-all"              % Netty
   val slf4jApi                = "org.slf4j"               % "slf4j-api"              % Slf4j          % "provided"  // MIT
   val jsr166e                 = "com.twitter"             % "jsr166e"                % JSR166e                      // Creative Commons

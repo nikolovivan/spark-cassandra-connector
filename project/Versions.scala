@@ -36,7 +36,6 @@ object Versions {
   val JodaT           = "2.3"
   val JOpt            = "3.2"
   val Lzf             = "1.0.3"
-  val Lz4             = "1.4.0"
   val Netty           = "4.0.33.Final"
   val CodaHaleMetrics = "3.0.2"
   val ScalaCheck      = "1.12.5"

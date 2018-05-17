@@ -347,7 +347,7 @@ object PushdownUsesConf extends CassandraPredicateRules {
     predicates: AnalyzedPredicates,
     tableDef: TableDef,
     conf: SparkConf): AnalyzedPredicates = {
-      if (conf.contains(testKey) {
+      if (conf.contains(testKey)) {
         predicates
       } else {
         throw new IllegalAccessException(s"Conf did not contain $testKey")

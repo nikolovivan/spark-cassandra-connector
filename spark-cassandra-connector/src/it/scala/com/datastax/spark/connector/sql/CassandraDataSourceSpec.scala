@@ -276,7 +276,7 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
         rdd
     }
 
-    val qp = getSourceRDD(
+    val cassandraTableScanRDD = getSourceRDD(
       df.queryExecution
         .executedPlan
         .collectLeaves().head // Get Source

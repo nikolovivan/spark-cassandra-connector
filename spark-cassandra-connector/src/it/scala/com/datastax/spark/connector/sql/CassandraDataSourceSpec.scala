@@ -13,6 +13,9 @@ import com.datastax.spark.connector.cql.{CassandraConnector, TableDef}
 import com.datastax.spark.connector.embedded.YamlTransformations
 import com.datastax.spark.connector.util.Logging
 import org.apache.spark.SparkConf
+import com.datastax.spark.connector.rdd.CassandraTableScanRDD
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.execution.RowDataSourceScanExec
 
 class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging with BeforeAndAfterEach {
   useCassandraConfig(Seq(YamlTransformations.Default))
@@ -255,7 +258,6 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
     qp should include ("Filter (") // Should have a Spark Filter Step
   }
 
-  // fails. Not sure if affects correctness.
   it should "apply user custom predicates in the order they are specified" in {
     sc.setLocalProperty(
       CassandraSourceRelation.AdditionalCassandraPushDownRulesParam.name,
@@ -267,11 +269,31 @@ class CassandraDataSourceSpec extends SparkCassandraITFlatSpecBase with Logging 
       .options(Map("keyspace" -> ks, "table" -> "test1"))
       .load().filter("a=1 and b=2 and c=1 and e=1")
 
-    val qp = df.queryExecution
-      .executedPlan
-      .children(0)
-      .children(0)
-    qp.toString should include ("EqualTo(a,1), EqualTo(b,2), EqualTo(c,1)")
+    def getSourceRDD(rdd: RDD[_]): RDD[_] = {
+      if (rdd.dependencies.nonEmpty)
+        getSourceRDD(rdd.dependencies.head.rdd)
+      else
+        rdd
+    }
+
+    val qp = getSourceRDD(
+      df.queryExecution
+        .executedPlan
+        .collectLeaves().head // Get Source
+        .asInstanceOf[RowDataSourceScanExec]
+        .rdd
+    ).asInstanceOf[CassandraTableScanRDD[_]]
+
+    val pushedWhere = cassandraTableScanRDD.where
+    val predicates = pushedWhere.predicates.head.split("AND").map(_.trim)
+    val values = pushedWhere.values
+    val pushedPredicates = predicates.zip(values)
+    pushedPredicates should contain allOf(
+      ("\"a\" = ?", 1),
+      ("\"b\" = ?", 2),
+      ("\"c\" = ?", 1),
+      ("\"e\" = ?", 1)
+    )
   }
 
   it should "pass through local conf properties" in {
